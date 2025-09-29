@@ -20,6 +20,8 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    private const val BASE_URL = "https://test_baseurl.com/v2/"
+
     @Provides
     @Singleton
     fun provideOkHttpClient(@ApplicationContext context: Context): OkHttpClient {
@@ -28,7 +30,7 @@ object NetworkModule {
                 MockFitInterceptor(
                     bodyFactory = { input -> context.assets.open(input) },
                     logger = { tag, message -> Log.d(tag, message) },
-                    baseUrl = "https://test_baseurl.com/v2/",
+                    baseUrl = BASE_URL,
                     requestPathToJsonMap = MockFitConfig.REQUEST_TO_JSON,
                     mockFilesPath = "",
                     mockFitEnable = true,
@@ -46,7 +48,7 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://test_baseurl.com/v2/")
+            .baseUrl(BASE_URL)
             .addConverterFactory(JacksonConverterFactory.create())
             .client(okHttpClient)
             .build()

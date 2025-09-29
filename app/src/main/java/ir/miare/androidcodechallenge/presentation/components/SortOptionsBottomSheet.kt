@@ -8,8 +8,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import ir.miare.androidcodechallenge.R
 import ir.miare.androidcodechallenge.domain.util.SortOption
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,7 +39,7 @@ fun SortOptionsBottomSheet(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Sort Players",
+                    text = stringResource(id = R.string.sort_players),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold
                 )
@@ -45,7 +47,7 @@ fun SortOptionsBottomSheet(
                 IconButton(onClick = onDismiss) {
                     Icon(
                         imageVector = Icons.Default.Close,
-                        contentDescription = "Close"
+                        contentDescription = stringResource(id = R.string.close_button_description)
                     )
                 }
             }
@@ -54,12 +56,12 @@ fun SortOptionsBottomSheet(
 
             // Sort options
             val sortOptions = listOf(
-                SortOption.NAME_ASC to "Name (A-Z)",
-                SortOption.NAME_DESC to "Name (Z-A)",
-                SortOption.GOALS_ASC to "Goals (Low to High)",
-                SortOption.GOALS_DESC to "Goals (High to Low)",
-                SortOption.TEAM_RANK_ASC to "Team Rank (Best to Worst)",
-                SortOption.TEAM_RANK_DESC to "Team Rank (Worst to Best)"
+                SortOption.NAME_ASC to stringResource(id = R.string.sort_name_asc),
+                SortOption.NAME_DESC to stringResource(id = R.string.sort_name_desc),
+                SortOption.GOALS_ASC to stringResource(id = R.string.sort_goals_asc),
+                SortOption.GOALS_DESC to stringResource(id = R.string.sort_goals_desc),
+                SortOption.TEAM_RANK_ASC to stringResource(id = R.string.sort_rank_asc),
+                SortOption.TEAM_RANK_DESC to stringResource(id = R.string.sort_rank_desc)
             )
 
             sortOptions.forEach { (option, displayName) ->

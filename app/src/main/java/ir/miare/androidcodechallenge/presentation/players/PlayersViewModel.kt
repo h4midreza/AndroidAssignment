@@ -1,10 +1,12 @@
 package ir.miare.androidcodechallenge.presentation.players
 
+import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
+import ir.miare.androidcodechallenge.R
 import ir.miare.androidcodechallenge.domain.model.Player
 import ir.miare.androidcodechallenge.domain.usecase.GetPlayersUseCase
 import ir.miare.androidcodechallenge.domain.usecase.ToggleFollowPlayerUseCase
@@ -13,10 +15,14 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.io.IOException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 @HiltViewModel
 class PlayersViewModel @Inject constructor(
+    private val application: Application,
     private val getPlayersUseCase: GetPlayersUseCase,
     private val toggleFollowPlayerUseCase: ToggleFollowPlayerUseCase
 ) : ViewModel() {
@@ -35,27 +41,28 @@ class PlayersViewModel @Inject constructor(
         .flatMapLatest { sort ->
             _uiState.value = PlayersUiState.Loading
             try {
-                //loading delay
                 delay(1000)
 
                 val playersFlow = getPlayersUseCase(sort).cachedIn(viewModelScope)
                 _uiState.value = PlayersUiState.Success(playersFlow)
                 playersFlow
             } catch (e: Exception) {
-                val errorMessage = when (e) {
-                    is java.net.UnknownHostException -> "No internet connection. Please check your network."
-                    is java.net.SocketTimeoutException -> "Connection timeout. Please try again."
-                    is java.io.IOException -> "Network error occurred. Please try again."
-                    else -> "Failed to load players: ${e.localizedMessage ?: "Unknown error"}"
+                val message = when (e) {
+                    is UnknownHostException -> application.getString(R.string.error_no_internet)
+                    is SocketTimeoutException -> application.getString(R.string.error_connection_timeout)
+                    is IOException -> application.getString(R.string.error_network_error)
+                    else -> application.getString(
+                        R.string.error_failed_to_load_players,
+                        e.localizedMessage ?: application.getString(R.string.error_unknown)
+                    )
                 }
-                _uiState.value = PlayersUiState.Error(errorMessage)
+                _uiState.value = PlayersUiState.Error(message)
                 flowOf(PagingData.empty())
             }
         }
         .cachedIn(viewModelScope)
 
     init {
-        // Initialize with loading state
         _uiState.value = PlayersUiState.Loading
     }
 
@@ -68,13 +75,16 @@ class PlayersViewModel @Inject constructor(
             try {
                 toggleFollowPlayerUseCase(playerId)
             } catch (e: Exception) {
-                val errorMessage = when (e) {
-                    is java.net.UnknownHostException -> "No internet connection. Please check your network."
-                    is java.net.SocketTimeoutException -> "Connection timeout. Please try again."
-                    is java.io.IOException -> "Network error occurred. Please try again."
-                    else -> "Failed to update player status: ${e.localizedMessage ?: "Unknown error"}"
+                val message = when (e) {
+                    is UnknownHostException -> application.getString(R.string.error_no_internet)
+                    is SocketTimeoutException -> application.getString(R.string.error_connection_timeout)
+                    is IOException -> application.getString(R.string.error_network_error)
+                    else -> application.getString(
+                        R.string.error_failed_to_update_player_status,
+                        e.localizedMessage ?: application.getString(R.string.error_unknown)
+                    )
                 }
-                _errorMessage.value = errorMessage
+                _errorMessage.value = message
             }
         }
     }
@@ -85,7 +95,6 @@ class PlayersViewModel @Inject constructor(
 
     fun retryLoading() {
         _uiState.value = PlayersUiState.Loading
-        // Trigger reload by updating sort option
         val currentSort = _sortOption.value
         _sortOption.value = currentSort
     }

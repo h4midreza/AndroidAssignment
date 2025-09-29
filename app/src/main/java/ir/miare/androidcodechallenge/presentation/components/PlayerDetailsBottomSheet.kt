@@ -9,8 +9,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import ir.miare.androidcodechallenge.R
 import ir.miare.androidcodechallenge.domain.model.Player
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,7 +40,7 @@ fun PlayerDetailsBottomSheet(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Overview",
+                    text = stringResource(id = R.string.bottom_sheet_title_overview),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold
                 )
@@ -46,7 +48,7 @@ fun PlayerDetailsBottomSheet(
                 IconButton(onClick = onDismiss) {
                     Icon(
                         imageVector = Icons.Default.Close,
-                        contentDescription = "Close"
+                        contentDescription = stringResource(id = R.string.close_button_description)
                     )
                 }
             }
@@ -71,16 +73,16 @@ fun PlayerDetailsBottomSheet(
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    DetailRow(label = "Team", value = player.team.name)
+                    DetailRow(label = stringResource(id = R.string.label_team), value = player.team.name)
                     Spacer(modifier = Modifier.height(4.dp))
 
-                    DetailRow(label = "League", value = player.league)
+                    DetailRow(label = stringResource(id = R.string.label_league), value = player.league)
                     Spacer(modifier = Modifier.height(4.dp))
 
-                    DetailRow(label = "Team Rank", value = player.team.rank.toString())
+                    DetailRow(label = stringResource(id = R.string.label_team_rank), value = player.team.rank.toString())
                     Spacer(modifier = Modifier.height(4.dp))
 
-                    DetailRow(label = "Total Goals", value = player.totalGoal.toString())
+                    DetailRow(label = stringResource(id = R.string.label_total_goals), value = player.totalGoal.toString())
                 }
             }
 
@@ -100,7 +102,7 @@ fun PlayerDetailsBottomSheet(
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = if (player.isFollowed) "Unfollow Player" else "Follow Player"
+                    text = if (player.isFollowed) stringResource(id = R.string.unfollow_player) else stringResource(id = R.string.follow_player)
                 )
             }
 

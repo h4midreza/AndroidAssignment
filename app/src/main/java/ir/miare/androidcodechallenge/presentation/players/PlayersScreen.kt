@@ -9,6 +9,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -16,6 +17,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
+import ir.miare.androidcodechallenge.R
 import ir.miare.androidcodechallenge.domain.util.SortOption
 import ir.miare.androidcodechallenge.presentation.components.PlayerItem
 import ir.miare.androidcodechallenge.presentation.components.SortOptionsBottomSheet
@@ -60,14 +62,14 @@ fun PlayersScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Players",
+                        text = stringResource(id = R.string.players_title),
                         style = MaterialTheme.typography.headlineMedium
                     )
 
                     Button(
                         onClick = onNavigateToFollowed
                     ) {
-                        Text("Following")
+                        Text(stringResource(id = R.string.following_button_text))
                     }
                 }
 
@@ -90,13 +92,13 @@ fun PlayersScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Sorted by: ${getSortDisplayName(sortOption)}",
+                            text = stringResource(id = R.string.sorted_by, getSortDisplayName(sortOption = sortOption)),
                             style = MaterialTheme.typography.bodyMedium
                         )
 
                         Icon(
                             imageVector = Icons.Default.Sort,
-                            contentDescription = "Sort players",
+                            contentDescription = stringResource(id = R.string.sort_players),
                             tint = MaterialTheme.colorScheme.onPrimaryContainer
                         )
                     }
@@ -163,7 +165,7 @@ fun PlayersScreen(
                                                 horizontalAlignment = Alignment.CenterHorizontally
                                             ) {
                                                 Text(
-                                                    text = "Failed to load more players",
+                                                    text = stringResource(id = R.string.failed_to_load_more_players),
                                                     style = MaterialTheme.typography.bodyMedium,
                                                     color = MaterialTheme.colorScheme.onErrorContainer
                                                 )
@@ -171,7 +173,7 @@ fun PlayersScreen(
                                                 Button(
                                                     onClick = { players.retry() }
                                                 ) {
-                                                    Text("Retry")
+                                                    Text(stringResource(id = R.string.retry_button_text))
                                                 }
                                             }
                                         }
@@ -211,7 +213,7 @@ private fun LoadingContent() {
             CircularProgressIndicator()
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "Loading players...",
+                text = stringResource(id = R.string.loading_players),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -250,7 +252,7 @@ private fun ErrorContent(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = "Something went wrong",
+                    text = stringResource(id = R.string.something_went_wrong),
                     style = MaterialTheme.typography.headlineSmall,
                     color = MaterialTheme.colorScheme.onErrorContainer,
                     textAlign = TextAlign.Center
@@ -276,24 +278,25 @@ private fun ErrorContent(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Refresh,
-                        contentDescription = null,
+                        contentDescription = null, // Or add a string, e.g., stringResource(R.string.retry_icon_description)
                         modifier = Modifier.size(18.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Try Again")
+                    Text(stringResource(id = R.string.try_again_button_text)) // Changed
                 }
             }
         }
     }
 }
 
+@Composable
 private fun getSortDisplayName(sortOption: SortOption): String {
     return when (sortOption) {
-        SortOption.NAME_ASC -> "Name (A-Z)"
-        SortOption.NAME_DESC -> "Name (Z-A)"
-        SortOption.GOALS_ASC -> "Goals (Low to High)"
-        SortOption.GOALS_DESC -> "Goals (High to Low)"
-        SortOption.TEAM_RANK_ASC -> "Team Rank (Best to Worst)"
-        SortOption.TEAM_RANK_DESC -> "Team Rank (Worst to Best)"
+        SortOption.NAME_ASC -> stringResource(id = R.string.sort_name_asc)
+        SortOption.NAME_DESC -> stringResource(id = R.string.sort_name_desc)
+        SortOption.GOALS_ASC -> stringResource(id = R.string.sort_goals_asc)
+        SortOption.GOALS_DESC -> stringResource(id = R.string.sort_goals_desc)
+        SortOption.TEAM_RANK_ASC -> stringResource(id = R.string.sort_rank_asc)
+        SortOption.TEAM_RANK_DESC -> stringResource(id = R.string.sort_rank_desc)
     }
 }

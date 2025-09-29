@@ -8,8 +8,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import ir.miare.androidcodechallenge.R
 import ir.miare.androidcodechallenge.domain.model.Player
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,14 +57,14 @@ fun PlayerItem(
 
                 Row {
                     Text(
-                        text = "Goals: ${player.totalGoal}",
+                        text = "${stringResource(id = R.string.goals_label)} ${player.totalGoal}",
                         style = MaterialTheme.typography.bodySmall
                     )
 
                     Spacer(modifier = Modifier.width(12.dp))
 
                     Text(
-                        text = "Team Rank: ${player.team.rank}",
+                        text = "${stringResource(id = R.string.team_rank_label)} ${player.team.rank}",
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
@@ -79,7 +81,7 @@ fun PlayerItem(
                 ) {
                     Icon(
                         imageVector = if (player.isFollowed) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
-                        contentDescription = if (player.isFollowed) "Unfollow" else "Follow",
+                        contentDescription = if (player.isFollowed) stringResource(id = R.string.unfollow_player) else stringResource(id = R.string.follow_player),
                         tint = if (player.isFollowed) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }

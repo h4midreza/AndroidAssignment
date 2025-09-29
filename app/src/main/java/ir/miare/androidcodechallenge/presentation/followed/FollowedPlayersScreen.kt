@@ -9,9 +9,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import ir.miare.androidcodechallenge.R
 import ir.miare.androidcodechallenge.presentation.components.PlayerItem
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,7 +45,6 @@ fun FollowedPlayersScreen(
                     .padding(paddingValues)
                     .padding(16.dp)
             ) {
-                // Top bar with back button
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -55,12 +56,12 @@ fun FollowedPlayersScreen(
                     ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back"
+                            contentDescription = stringResource(id = R.string.back_button_description)
                         )
                     }
 
                     Text(
-                        text = "My Players",
+                        text = stringResource(id = R.string.followed_screen_title),
                         style = MaterialTheme.typography.headlineSmall,
                         modifier = Modifier.align(Alignment.Center)
                     )
@@ -69,7 +70,6 @@ fun FollowedPlayersScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 if (followedPlayers.isEmpty()) {
-                    // Empty state
                     Box(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
@@ -78,7 +78,7 @@ fun FollowedPlayersScreen(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Text(
-                                text = "No followed players yet",
+                                text = stringResource(id = R.string.no_followed_players),
                                 style = MaterialTheme.typography.titleLarge,
                                 textAlign = TextAlign.Center
                             )
@@ -86,7 +86,7 @@ fun FollowedPlayersScreen(
                             Spacer(modifier = Modifier.height(8.dp))
 
                             Text(
-                                text = "Follow players from the main screen to see them here",
+                                text = stringResource(id = R.string.follow_players_hint),
                                 style = MaterialTheme.typography.bodyMedium,
                                 textAlign = TextAlign.Center,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -94,7 +94,6 @@ fun FollowedPlayersScreen(
                         }
                     }
                 } else {
-                    // Followed players list
                     LazyColumn(
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
