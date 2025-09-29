@@ -1,5 +1,42 @@
 <resources>
-    <string name="app_name">AndroidCodeChallenge</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">Football Players</string>
+    <string name="players_title">Football Players</string>
+    <string name="sort_players">Sort Players</string>
+    <string name="follow_player">Follow Player</string>
+    <string name="unfollow_player">Unfollow Player</string>
+    <string name="no_followed_players">No followed players yet</string>
+    <string name="follow_players_hint">Follow players from the main screen to see them here</string>
+    <string name="goals_label">Goals:</string>
+    <string name="team_rank_label">Team Rank:</string>
+    <string name="sorted_by">Sorted by: %1$s</string>
+
+    <string name="following_button_text">Following</string>
+    <string name="failed_to_load_more_players">Failed to load more players</string>
+    <string name="retry_button_text">Retry</string>
+    <string name="loading_players">Loading players…</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="try_again_button_text">Try Again</string>
+    <string name="sort_name_asc">Name (A-Z)</string>
+    <string name="sort_name_desc">Name (Z-A)</string>
+    <string name="sort_goals_asc">Goals (Low to High)</string>
+    <string name="sort_goals_desc">Goals (High to Low)</string>
+    <string name="sort_rank_asc">Team Rank (Best to Worst)</string>
+    <string name="sort_rank_desc">Team Rank (Worst to Best)</string>
+
+    <string name="error_no_internet">No internet connection. Please check your network.</string>
+    <string name="error_connection_timeout">Connection timeout. Please try again.</string>
+    <string name="error_network_error">Network error occurred. Please try again.</string>
+    <string name="error_failed_to_load_players">Failed to load players: %1$s</string>
+    <string name="error_unknown">Unknown error</string>
+    <string name="error_failed_to_update_player_status">Failed to update player status: %1$s</string>
+
+    <string name="back_button_description">Back</string>
+    <string name="followed_screen_title">My Players</string>
+
+    <string name="bottom_sheet_title_overview">Overview</string>
+    <string name="close_button_description">Close</string>
+    <string name="label_team">Team</string>
+    <string name="label_league">League</string>
+    <string name="label_team_rank">Team Rank</string>
+    <string name="label_total_goals">Total Goals</string>
 </resources>

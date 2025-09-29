@@ -1,19 +1,21 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.compose)
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
-    id 'com.google.dagger.hilt.android'
+    alias(libs.plugins.hilt)
 }
 
 android {
     namespace 'ir.miare.androidcodechallenge'
-    compileSdk 33
+    compileSdk 36
 
     defaultConfig {
         applicationId "ir.miare.androidcodechallenge"
-        minSdk 21
-        targetSdk 33
+        minSdk 26
+        targetSdk 36
         versionCode 1
         versionName "1.0"
 
@@ -36,44 +38,51 @@ android {
 
     buildFeatures {
         viewBinding true
+        compose true
     }
 }
 
 dependencies {
-    def lifecycle_version = "2.5.1"
-    def jackson_version = '2.13.0'
-    def retrofit_version = '2.9.0'
-    def coroutines_version = "1.6.4"
-    def hilt_version = "2.44.2"
-    def mockFit_version = "1.1.0"
-    def robolectric_version = '4.3'
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.appcompat
+    implementation libs.material
+    implementation libs.androidx.fragment.ktx
 
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation "androidx.fragment:fragment-ktx:1.5.5"
+    implementation platform(libs.androidx.compose.bom)
+    implementation libs.bundles.compose
+    implementation libs.androidx.navigation.compose
+    implementation libs.androidx.hilt.navigation.compose
 
-    testImplementation 'junit:junit:4.13.2'
-    testImplementation "org.robolectric:robolectric:$robolectric_version"
-    testImplementation "org.robolectric:shadows-multidex:$robolectric_version"
-    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation libs.androidx.lifecycle.viewmodel.ktx
+    implementation libs.androidx.paging.runtime
+    implementation libs.androidx.paging.compose
 
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:$jackson_version"
-    implementation "com.fasterxml.jackson.datatype:jackson-datatype-joda:$jackson_version"
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-json-org:$jackson_version") {
+    implementation libs.bundles.retrofit
+    implementation(libs.jackson.datatype.json.org) {
         exclude group: 'org.json', module: 'json'
     }
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-jackson:$retrofit_version"
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
-    implementation "com.github.javaherisaber.MockFit:runtime:$mockFit_version"
-    kapt "com.github.javaherisaber.MockFit:compiler:$mockFit_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+    implementation libs.hilt.android
+    kapt libs.hilt.compiler
+
+    implementation libs.kotlinx.coroutines.android
+    implementation libs.kotlinx.coroutines.core
+    implementation libs.kotlinx.serialization.json
+
+    implementation libs.mockfit.runtime
+    kapt libs.mockfit.compiler
+    testImplementation libs.bundles.testing
+    testImplementation libs.hilt.android.testing
+    kaptTest libs.hilt.android.compiler
+    androidTestImplementation libs.bundles.android.testing
+    androidTestImplementation platform(libs.androidx.compose.bom)
+    androidTestImplementation libs.hilt.android.testing
+    androidTestImplementation libs.androidx.test.ext.junit
+    androidTestImplementation libs.androidx.runner
+    androidTestImplementation libs.androidx.rules
+    androidTestImplementation libs.mockito.android
+    androidTestImplementation libs.mockito.kotlin
+    kaptAndroidTest libs.hilt.android.compiler
+    debugImplementation libs.androidx.compose.ui.tooling
+    debugImplementation libs.androidx.compose.ui.test.manifest
 }
