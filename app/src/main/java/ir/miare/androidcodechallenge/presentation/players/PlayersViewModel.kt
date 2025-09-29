@@ -1,28 +1,26 @@
 package ir.miare.androidcodechallenge.presentation.players
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.miare.androidcodechallenge.R
+import ir.miare.androidcodechallenge.di.ResourceProvider
 import ir.miare.androidcodechallenge.domain.model.Player
 import ir.miare.androidcodechallenge.domain.usecase.GetPlayersUseCase
 import ir.miare.androidcodechallenge.domain.usecase.ToggleFollowPlayerUseCase
-import ir.miare.androidcodechallenge.domain.util.SortOption
+import ir.miare.androidcodechallenge.util.ExceptionMapper
+import ir.miare.androidcodechallenge.util.SortOption
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.io.IOException
-import java.net.SocketTimeoutException
-import java.net.UnknownHostException
 import javax.inject.Inject
 
 @HiltViewModel
 class PlayersViewModel @Inject constructor(
-    private val application: Application,
+    private val resourceProvider: ResourceProvider,
     private val getPlayersUseCase: GetPlayersUseCase,
     private val toggleFollowPlayerUseCase: ToggleFollowPlayerUseCase
 ) : ViewModel() {
@@ -42,29 +40,20 @@ class PlayersViewModel @Inject constructor(
             _uiState.value = PlayersUiState.Loading
             try {
                 delay(1000)
-
                 val playersFlow = getPlayersUseCase(sort).cachedIn(viewModelScope)
                 _uiState.value = PlayersUiState.Success(playersFlow)
                 playersFlow
             } catch (e: Exception) {
-                val message = when (e) {
-                    is UnknownHostException -> application.getString(R.string.error_no_internet)
-                    is SocketTimeoutException -> application.getString(R.string.error_connection_timeout)
-                    is IOException -> application.getString(R.string.error_network_error)
-                    else -> application.getString(
-                        R.string.error_failed_to_load_players,
-                        e.localizedMessage ?: application.getString(R.string.error_unknown)
-                    )
-                }
+                val message = ExceptionMapper.map(
+                    e,
+                    resourceProvider,
+                    R.string.error_failed_to_load_players
+                )
                 _uiState.value = PlayersUiState.Error(message)
                 flowOf(PagingData.empty())
             }
         }
         .cachedIn(viewModelScope)
-
-    init {
-        _uiState.value = PlayersUiState.Loading
-    }
 
     fun updateSortOption(newSortOption: SortOption) {
         _sortOption.value = newSortOption
@@ -75,16 +64,11 @@ class PlayersViewModel @Inject constructor(
             try {
                 toggleFollowPlayerUseCase(playerId)
             } catch (e: Exception) {
-                val message = when (e) {
-                    is UnknownHostException -> application.getString(R.string.error_no_internet)
-                    is SocketTimeoutException -> application.getString(R.string.error_connection_timeout)
-                    is IOException -> application.getString(R.string.error_network_error)
-                    else -> application.getString(
-                        R.string.error_failed_to_update_player_status,
-                        e.localizedMessage ?: application.getString(R.string.error_unknown)
-                    )
-                }
-                _errorMessage.value = message
+                _errorMessage.value = ExceptionMapper.map(
+                    e,
+                    resourceProvider,
+                    R.string.error_failed_to_update_player_status
+                )
             }
         }
     }
