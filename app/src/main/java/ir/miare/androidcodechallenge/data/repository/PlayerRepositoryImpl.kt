@@ -9,7 +9,7 @@ import ir.miare.androidcodechallenge.data.paging.PlayerPagingSource
 import ir.miare.androidcodechallenge.data.remote.api.PlayerApiService
 import ir.miare.androidcodechallenge.domain.model.Player
 import ir.miare.androidcodechallenge.domain.repository.PlayerRepository
-import ir.miare.androidcodechallenge.domain.util.SortOption
+import ir.miare.androidcodechallenge.util.SortOption
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 import javax.inject.Singleton

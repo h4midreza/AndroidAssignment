@@ -18,7 +18,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
 import ir.miare.androidcodechallenge.R
-import ir.miare.androidcodechallenge.domain.util.SortOption
+import ir.miare.androidcodechallenge.util.SortOption
 import ir.miare.androidcodechallenge.presentation.components.PlayerItem
 import ir.miare.androidcodechallenge.presentation.components.SortOptionsBottomSheet
 

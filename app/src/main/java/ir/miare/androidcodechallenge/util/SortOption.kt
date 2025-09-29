@@ -1,4 +1,4 @@
-package ir.miare.androidcodechallenge.domain.util
+package ir.miare.androidcodechallenge.util
 
 enum class SortOption {
     NAME_ASC,

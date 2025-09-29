@@ -3,7 +3,7 @@ package ir.miare.androidcodechallenge.domain.usecase
 import androidx.paging.PagingData
 import ir.miare.androidcodechallenge.domain.model.Player
 import ir.miare.androidcodechallenge.domain.repository.PlayerRepository
-import ir.miare.androidcodechallenge.domain.util.SortOption
+import ir.miare.androidcodechallenge.util.SortOption
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

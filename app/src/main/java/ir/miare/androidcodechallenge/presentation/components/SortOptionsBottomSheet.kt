@@ -12,7 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ir.miare.androidcodechallenge.R
-import ir.miare.androidcodechallenge.domain.util.SortOption
+import ir.miare.androidcodechallenge.util.SortOption
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
