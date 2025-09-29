@@ -4,7 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import ir.miare.androidcodechallenge.data.local.LocalPlayerDataSource
 import ir.miare.androidcodechallenge.domain.model.Player
-import ir.miare.androidcodechallenge.domain.repository.SortOption
+import ir.miare.androidcodechallenge.domain.util.SortOption
 import kotlinx.coroutines.flow.first
 
 class PlayerPagingSource(
